@@ -58,16 +58,17 @@ This data aggregates into a graph that answers critical questions: *Which servic
 
 **Full control when you need it.** Self-host the entire stack to control exactly where your data lives and how it's accessed.
 
-For complete details, see [Data Confidentiality](https://archodex.com/docs/agent#data-confidentiality).
+For complete details, see the Data Confidentiality section of the [Getting Started](https://archodex.com/docs/getting-started) guide.
 
 ## Quick Start
 
 Choose how you want to explore Archodex:
 
 - **[Playground](https://play.archodex.com)**: See what insights look like without installing anything
-- **[Archodex.com](https://app.archodex.com/signup) (recommended)**: Zero infrastructure, instant dashboard, free to start
+- **[Docs](https://archodex.com/docs)**: Learn more about Archodex and how to get started
+- **[Sign Up](https://app.archodex.com/signup)**: Create an account and follow the instructions in the Archodex Dashboard
 - **[Test Locally](https://archodex.com/docs/getting-started/other-environments#running-the-archodex-agent-as-a-docker-container)**: Run the agent and see observations in logs (no account needed)
-- **[Self-Host](https://archodex.com/docs/self-hosting)**: Full control over your infrastructure and data
+- **[Self-Host](https://archodex.com/docs/self-host)**: Full control over your infrastructure and data
 
 ### GitHub Actions
 
@@ -110,10 +111,10 @@ See our guide on [running the agent as a docker container](https://archodex.com/
 
 ## Documentation
 
-- **[Getting Started](https://archodex.com/docs)**: Installation and first steps
+- **[Overview](https://archodex.com/docs)**: Overview of Archodex
+- **[Getting Started](https://archodex.com/docs/getting-started)**: Installation and first steps
+- **[Dashboard](https://archodex.com/docs/dashboard)**: How to use the Archodex dashboard
 - **[Rulesets Guide](https://archodex.com/docs/rulesets)**: Understanding and creating rulesets
-- **[API Reference](https://archodex.com/docs/api)**: Backend API documentation
-- **[Architecture](https://archodex.com/docs/architecture)**: Deep dive into how Archodex works
 
 ## Community
 
@@ -158,30 +159,6 @@ The Archodex project consists of focused repositories for each component:
 - **[archodex-www](https://github.com/Archodex/archodex-www)**: Website and documentation source
 
 
-## Self-Hosting
-
-Archodex can run entirely in your infrastructure with no external dependencies required.
-
-### Quick Self-Host Setup
-
-```bash
-# Backend API Server
-docker run -d \
-  --name archodex-backend \
-  -e SURREALDB_URL=ws://your-surrealdb:8000 \
-  -p 8080:8080 \
-  ghcr.io/archodex/archodex-backend:latest
-
-# Dashboard UI
-docker run -d \
-  --name archodex-frontend \
-  -e VITE_BACKEND_URL=http://localhost:8080 \
-  -p 3000:3000 \
-  ghcr.io/archodex/archodex-frontend:latest
-```
-
-For more details, see our [self-hosting guide](https://archodex.com/docs/self-hosting).
-
 ## Support
 
 - **Documentation**: [archodex.com/docs](https://archodex.com/docs)
@@ -191,7 +168,7 @@ For more details, see our [self-hosting guide](https://archodex.com/docs/self-ho
 
 ## License
 
-Archodex is **Fair Source** software licensed under the [Fair Core License – MIT (FCL-1.0-MIT)](https://fcl.dev/) [^1].
+Archodex is [**Fair Source**](https://fair.io/) software licensed under the [Fair Core License – MIT (FCL-1.0-MIT)](https://fcl.dev/) [^1].
 
 This means:
 
@@ -202,13 +179,3 @@ You **cannot** build a competing product or bypass license key enforcement
 For complete details about Fair Source, our patents, and what this means for you, see our [Licensing page](https://archodex.com/licensing).
 
 [^1]: The eBPF code under the `/src/bpf` directory of the [Archodex Agent](https://github.com/Archodex/archodex-agent/tree/main/src/bpf) is licensed under the [GNU General Public License v2.0 (GPL-2.0)](https://www.gnu.org/licenses/old-licenses/gpl-2.0.en.html).
-
----
-
-<p align="center">
-  <a href="https://app.archodex.com/signup">Get started</a>
-  &nbsp;·&nbsp;
-  <a href="https://archodex.com/docs">Read the docs</a>
-  &nbsp;·&nbsp;
-  <a href="https://github.com/Archodex/archodex">Star this repo ⭐</a>
-</p>
