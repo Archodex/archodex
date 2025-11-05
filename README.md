@@ -18,8 +18,7 @@ Archodex enables you to see:
 - **Events**: What happens (reads, writes, creates, deletes)
 - **Relationships**: How everything connects across environments
 
-This data aggregates into a graph that answers critical questions: *Which services will break if I rotate this secret? What shares
-this database? Who triggered this access?*
+This data aggregates into a graph that answers critical questions: *Which services will break if I rotate this secret? What shares this database? Who triggered this access?*
 
 
 ## How It Works
@@ -65,14 +64,14 @@ For complete details, see [Data Confidentiality](https://archodex.com/docs/agent
 
 Choose how you want to explore Archodex:
 
-- **🎮 [Interactive Demo](https://play.archodex.com)**: See what insights look like without installing anything
-- **📊 [Archodex.com](https://app.archodex.com/signup) (recommended)**: Zero infrastructure, instant dashboard, free to start
-- **🧪 Test Locally**: Run the agent and see observations in logs (no account needed)
-- **🔒 [Self-Host](https://archodex.com/docs/self-hosting)**: Full control over your infrastructure and data
+- **[Playground](https://play.archodex.com)**: See what insights look like without installing anything
+- **[Archodex.com](https://app.archodex.com/signup) (recommended)**: Zero infrastructure, instant dashboard, free to start
+- **[Test Locally](https://archodex.com/docs/getting-started/other-environments#running-the-archodex-agent-as-a-docker-container)**: Run the agent and see observations in logs (no account needed)
+- **[Self-Host](https://archodex.com/docs/self-hosting)**: Full control over your infrastructure and data
 
-### GitHub Actions (30 seconds)
+### GitHub Actions
 
-Add Archodex to any workflow:
+Add Archodex to any GitHub workflow:
 
 ```yaml
 - name: Observe with Archodex
@@ -84,50 +83,37 @@ Add Archodex to any workflow:
 
 **What happens:** The agent observes network traffic, extracts resource accesses based on rulesets, and either logs locally or reports to your backend.
 
-### Kubernetes (2 minutes)
+See our guide to [instrumenting Github Actions](https://archodex.com/docs/getting-started/ci-cd#instrumenting-github-actions) for more details.
+
+### Kubernetes
 
 Deploy as a DaemonSet to observe your entire cluster:
 
 ```bash
-# Quick start with default rulesets
-kubectl apply -f https://raw.githubusercontent.com/Archodex/archodex-helm-charts/main/quickstart.yaml
-
-# Or use Helm for customization
-helm repo add archodex https://charts.archodex.com
-helm install archodex archodex/archodex-agent \
-  --set reportApiKey=$ARCHODEX_API_KEY
+helm repo add archodex https://helm.archodex.com
+helm install archodex-agent --set reportApiKey=<reportApiKey>
 ```
+See our guide on [Observing Clusters](https://archodex.com/docs/getting-started/kubernetes#observing-clusters) for more details.
 
 ### Local Testing (Log-Only Mode)
 
-Try Archodex without sending any data:
+Try Archodex as a Docker Container without sending any data:
 
 ```bash
-# Download and run the agent
-curl -L https://get.archodex.com | sh
-./archodex-agent --enable-ruleset github_actions@v1 --log-only
-
 # Observations are logged locally - nothing sent externally
+docker run --rm -it \
+  --cap-add BPF --cap-add PERFMON --cap-add SYS_PTRACE --pid host \
+  ghcr.io/archodex/archodex-agent:latest network
 ```
 
-For detailed installation guides, see our [documentation](https://archodex.com/docs).
+See our guide on [running the agent as a docker container](https://archodex.com/docs/getting-started/other-environments#running-the-archodex-agent-as-a-docker-container) for more details.
 
-## Repository Guide
+## Documentation
 
-The Archodex project consists of focused repositories for each component:
-
-### Core Components
-- **[archodex](https://github.com/Archodex/archodex)** ← You are here - Central coordination, issues, discussions
-- **[archodex-agent](https://github.com/Archodex/archodex-agent)**: eBPF-based observability agent (Rust + eBPF C)
-- **[archodex-backend](https://github.com/Archodex/archodex-backend)**: API server and graph aggregation (Rust)
-- **[archodex-frontend](https://github.com/Archodex/archodex-frontend)**: Interactive dashboard (React + TypeScript)
-
-### Rulesets & Configuration
-- **[archodex-rules](https://github.com/Archodex/archodex-rules)**: Observation rulesets (contribute yours!)
-
-### Deployment & Infrastructure
-- **[archodex-helm-charts](https://github.com/Archodex/archodex-helm-charts)**: Kubernetes deployment configurations
-- **[archodex-www](https://github.com/Archodex/archodex-www)**: Website and documentation source
+- **[Getting Started](https://archodex.com/docs)**: Installation and first steps
+- **[Rulesets Guide](https://archodex.com/docs/rulesets)**: Understanding and creating rulesets
+- **[API Reference](https://archodex.com/docs/api)**: Backend API documentation
+- **[Architecture](https://archodex.com/docs/architecture)**: Deep dive into how Archodex works
 
 ## Community
 
@@ -154,6 +140,24 @@ Your early contributions will help shape Archodex. Whether this is your first op
 
 See our [Contributing Guide](https://archodex.com/contributing) for details.
 
+## Repository Guide
+
+The Archodex project consists of focused repositories for each component:
+
+### Core Components
+- **[archodex](https://github.com/Archodex/archodex)** ← You are here - Central coordination, issues, discussions
+- **[archodex-agent](https://github.com/Archodex/archodex-agent)**: eBPF-based observability agent (Rust + eBPF C)
+- **[archodex-backend](https://github.com/Archodex/archodex-backend)**: API server and graph aggregation (Rust)
+- **[archodex-frontend](https://github.com/Archodex/archodex-frontend)**: Interactive dashboard (React + TypeScript)
+
+### Rulesets & Configuration
+- **[archodex-rules](https://github.com/Archodex/archodex-rules)**: Observation rulesets (contribute yours!)
+
+### Deployment & Infrastructure
+- **[archodex-helm-charts](https://github.com/Archodex/archodex-helm-charts)**: Kubernetes deployment configurations
+- **[archodex-www](https://github.com/Archodex/archodex-www)**: Website and documentation source
+
+
 ## Self-Hosting
 
 Archodex can run entirely in your infrastructure with no external dependencies required.
@@ -178,13 +182,6 @@ docker run -d \
 
 For more details, see our [self-hosting guide](https://archodex.com/docs/self-hosting).
 
-## Documentation
-
-- **[Getting Started](https://archodex.com/docs)**: Installation and first steps
-- **[Rulesets Guide](https://archodex.com/docs/rulesets)**: Understanding and creating rulesets
-- **[API Reference](https://archodex.com/docs/api)**: Backend API documentation
-- **[Architecture](https://archodex.com/docs/architecture)**: Deep dive into how Archodex works
-
 ## Support
 
 - **Documentation**: [archodex.com/docs](https://archodex.com/docs)
@@ -194,7 +191,9 @@ For more details, see our [self-hosting guide](https://archodex.com/docs/self-ho
 
 ## License
 
-Archodex is **Fair Source** software licensed under the [Fair Core License – MIT (FCL-1.0-MIT)](https://fcl.dev/)[^1]. This means:
+Archodex is **Fair Source** software licensed under the [Fair Core License – MIT (FCL-1.0-MIT)](https://fcl.dev/) [^1].
+
+This means:
 
 You **can** use Archodex for your company, self-host it, inspect and modify the code, and contribute improvements
 
@@ -202,11 +201,9 @@ You **cannot** build a competing product or bypass license key enforcement
 
 For complete details about Fair Source, our patents, and what this means for you, see our [Licensing page](https://archodex.com/licensing).
 
-[^1]: eBPF code in the [Archodex Agent `/src/bpf`](https://github.com/Archodex/archodex-agent/tree/main/src/bpf) is GPL-2.0
+[^1]: The eBPF code under the `/src/bpf` directory of the [Archodex Agent](https://github.com/Archodex/archodex-agent/tree/main/src/bpf) is licensed under the [GNU General Public License v2.0 (GPL-2.0)](https://www.gnu.org/licenses/old-licenses/gpl-2.0.en.html).
 
 ---
-1.
-
 
 <p align="center">
   <a href="https://app.archodex.com/signup">Get started</a>
@@ -215,28 +212,3 @@ For complete details about Fair Source, our patents, and what this means for you
   &nbsp;·&nbsp;
   <a href="https://github.com/Archodex/archodex">Star this repo ⭐</a>
 </p>
-
-2.
-
-<table>
-  <tr>
-    <td align="center"><a href="https://app.archodex.com/signup">Get started</a></td>
-    <td align="center"><a href="https://archodex.com/docs">Read the docs</a></td>
-    <td align="center"><a href="https://github.com/Archodex/archodex">Star this repo ⭐</a></td>
-  </tr>
-</table>
-
-3.
-
-<table width="100%">
-  <tr>
-    <td align="left"><a href="https://app.archodex.com/signup">Get started</a></td>
-    <td align="center"><a href="https://archodex.com/docs">Read the docs</a></td>
-    <td align="right"><a href="https://github.com/Archodex/archodex">Star this repo ⭐</a></td>
-  </tr>
-</table>
-
-
-[Get started](https://app.archodex.com/signup) • [Read the docs](https://archodex.com/docs) • [Star this repo](https://github.com/Archodex/archodex) ⭐
-
-Built with care by the [Archodex team](https://archodex.com/team). Join us!
