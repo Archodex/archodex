@@ -67,47 +67,17 @@ Choose how you want to explore Archodex:
 - **[Playground](https://play.archodex.com)**: See what insights look like without installing anything
 - **[Docs](https://archodex.com/docs)**: Learn more about Archodex and how to get started
 - **[Sign Up](https://app.archodex.com/signup)**: Create an account and follow the instructions in the Archodex Dashboard
-- **[Test Locally](https://archodex.com/docs/getting-started/other-environments#running-the-archodex-agent-as-a-docker-container)**: Run the agent and see observations in logs (no account needed)
 - **[Self-Host](https://archodex.com/docs/self-host)**: Full control over your infrastructure and data
 
-### GitHub Actions
+Use the Archodex Agent to observe many kinds of workloads:
 
-Add Archodex to any GitHub workflow:
+- **[Test Locally](https://archodex.com/docs/getting-started/other-environments#running-the-archodex-agent-as-a-docker-container)**: Run the agent and see observations in logs (no account needed)
+- **[Kubernetes](https://archodex.com/docs/getting-started/kubernetes)**: Install our Helm chart to observe all workloads in a Cluster, or add the agent to individual Pods
+- **[CI/CD](https://archodex.com/docs/getting-started/ci-cd)**: Observe secrets used in your GitHub Actions (and compatible) CI/CD workflows
 
-```yaml
-- name: Observe with Archodex
-  uses: archodex/archodex-agent-action@v1
-  with:
-    # Omit report_api_key for log-only mode (data stays local)
-    report_api_key: ${{ secrets.ARCHODEX_API_KEY }}
-```
+Use the Archodex Agent to report secrets hardcoded in your source code to relate them to values observed in secret stores and used by workloads:
 
-**What happens:** The agent observes network traffic, extracts resource accesses based on rulesets, and either logs locally or reports to your backend.
-
-See our guide to [instrumenting Github Actions](https://archodex.com/docs/getting-started/ci-cd#instrumenting-github-actions) for more details.
-
-### Kubernetes
-
-Deploy as a DaemonSet to observe your entire cluster:
-
-```bash
-helm repo add archodex https://helm.archodex.com
-helm install archodex-agent --set reportApiKey=<reportApiKey>
-```
-See our guide on [Observing Clusters](https://archodex.com/docs/getting-started/kubernetes#observing-clusters) for more details.
-
-### Local Testing (Log-Only Mode)
-
-Try Archodex as a Docker Container without sending any data:
-
-```bash
-# Observations are logged locally - nothing sent externally
-docker run --rm -it \
-  --cap-add BPF --cap-add PERFMON --cap-add SYS_PTRACE --pid host \
-  ghcr.io/archodex/archodex-agent:latest network
-```
-
-See our guide on [running the agent as a docker container](https://archodex.com/docs/getting-started/other-environments#running-the-archodex-agent-as-a-docker-container) for more details.
+- **[Source Code](https://archodex.com/docs/getting-started/secrets-scanners)**: Run the Archodex Agent to report secrets discovered by GitHub Secret Scanning
 
 ## Documentation
 
@@ -157,7 +127,6 @@ The Archodex project consists of focused repositories for each component:
 ### Deployment & Infrastructure
 - **[archodex-helm-charts](https://github.com/Archodex/archodex-helm-charts)**: Kubernetes deployment configurations
 - **[archodex-www](https://github.com/Archodex/archodex-www)**: Website and documentation source
-
 
 ## Support
 
